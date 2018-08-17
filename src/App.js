@@ -13,11 +13,11 @@ class App extends Component {
       otherState:'some other value'
     }
 
-    switchHand = () => {
+    switchHand = (newName) => {
         // console.log('Was Clicked');
         //DO NOT DO THIS :  this.state.persons[0].name = 'Hamada';
         this.setState({persons:[
-          {name:'Mohammed',age:27},
+          {name:newName,age:27},
           {name:'sara Hellry',age:25},
           {name:'Lara more',age:21}
 
@@ -25,15 +25,36 @@ class App extends Component {
        })
      }
 
+     nameChange = (event) => {
+        this.setState({persons:[
+          {name:'Moh',age:27},
+          {name:event.target.value,age:25},
+          {name:'Lara more',age:21}
+
+          ]
+      })
+     }
+
   render() {
     return (
       <div className="App">
         <h1> It is Moh , Hey </h1>
         <p>Hello Another paraghraph</p>
-        <button onClick={this.switchHand}>Switch Name</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age}>My Hobbies: Racing</Person>
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}></Person>
-        <Person name="Sara" age="23"></Person>
+        <button onClick={() => this.switchHand('HAmada')}>Switch Name</button>
+
+        <Person 
+          name={this.state.persons[0].name} 
+          age={this.state.persons[0].age}
+          click = {this.switchHand.bind(this,'HAmada!!!')} 
+          changed = {this.nameChange}>My Hobbies: Racing</Person>
+
+        <Person 
+          name={this.state.persons[1].name} 
+          age={this.state.persons[1].age}></Person>
+
+        <Person
+          name={this.state.persons[2].name} 
+          age={this.state.persons[2].age}></Person>
         
       </div>
       
