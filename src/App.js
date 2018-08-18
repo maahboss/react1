@@ -6,9 +6,9 @@ import Person from './Person/Person';
 class App extends Component {
     state = {
       persons:[
-        {name:'Moh',age:28},
-        {name:'sara',age:26},
-        {name:'Lara',age:23}
+        {id:'dafd2',name:'Moh',age:28},
+        {id:'tfdbv5',name:'sara',age:26},
+        {id:'ropkf8',name:'Lara',age:23}
       ],
       otherState:'some other value',
       showPersons: false
@@ -16,18 +16,29 @@ class App extends Component {
 
     
 
-     nameChange = (event) => {
-        this.setState({persons:[
-          {name:'Moh',age:27},
-          {name:event.target.value,age:25},
-          {name:'Lara more',age:21}
+     nameChange = (event,id) => {
+        const personIndex = this.state.persons.findIndex(p => {
+          return p.id === id;
+        });
 
-          ]
-      })
+        const person = { 
+          ...this.state.persons[personIndex]
+        };
+
+       // const person = Object.assign({},this.state.persons[personIndex]);
+
+       person.name = event.target.value;
+
+       const persons = [...this.state.persons];
+       persons[personIndex] = person;
+
+        this.setState({persons:persons});
      }
+     
 
      deletePersonHandler = (personIndex) => {
-       const persons = this.state.persons;
+      // const persons = this.state.persons;
+      const persons = [...this.state.persons]
        persons.splice(personIndex,1);
        this.setState({persons : persons});
      }
@@ -57,7 +68,9 @@ class App extends Component {
                   return <Person 
                             click={() => this.deletePersonHandler(index)}
                             name={person.name} 
-                            age={person.age}/>
+                            age={person.age}
+                            key={person.id}
+                            changed={(event) => this.nameChange(event ,person.id)} />
                 })}
                 {/* <Person 
                   name={this.state.persons[0].name} 
